@@ -11,7 +11,6 @@ struct Student{
     bool gender;
     char email[50];
     char phone[20];
-    char password[50];
+   // char password[50];
     int number_course;
 };
-
