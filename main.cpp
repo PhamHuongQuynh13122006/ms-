@@ -14,8 +14,6 @@ struct Student students[100] = {
 
 int n = 5;
 int main() {	
-
-	const char *file_name = "students.dat";
     int menu;
     menuStart(&menu);
     switch (menu) {
