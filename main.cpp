@@ -2,16 +2,14 @@
 #include <stdlib.h>
 #include <string.h> 
 #include "function.h"
-#include "datatype.h"
-
+//#include "datatype.h"
 struct Student students[100] = {
-    {"1", "ENG_A", "Nguyen Van A", {1, 12, 2000}, true, "TVA@gmail.com", "0123456789", "QAZ123", 3},
-    {"2", "ENG_B", "Nguyen Thi V", {23, 5, 2002}, false, "TTV@gmail.com", "0122837333", "qaz468", 4},
-    {"3", "ENG_C", "Nguyen Van D", {11, 10, 2004}, true, "TVH@gmail.com", "0738493720", "tdz246", 2},
-    {"4", "ENG_D", "Nguyen Van T", {3, 11, 2005}, true, "TVT@gmail.com", "0627392739", "plm678", 5},
-    {"5", "ENG_A", "Nguyen Thi B", {18, 2, 2003}, false, "TTB@gmail.com", "0937595931", "ugc789", 1}
+    {"1", "ENG_A", "Nguyen Van A", {1, 12, 2000}, true, "TVA@gmail.com", "0123456789",3},
+    {"2", "ENG_B", "Nguyen Thi V", {23, 5, 2002}, false, "TTV@gmail.com", "0122837333", 4},
+    {"3", "ENG_C", "Nguyen Van D", {11, 10, 2004}, true, "TVH@gmail.com", "0738493720", 2},
+    {"4", "ENG_D", "Nguyen Van T", {3, 11, 2005}, true, "TVT@gmail.com", "0627392739", 5},
+    {"5", "ENG_A", "Nguyen Thi B", {18, 2, 2003}, false, "TTB@gmail.com", "0937595931", 1}
 };
-
 int n = 5;
 int main() {	
     int menu;
@@ -29,48 +27,45 @@ int main() {
                 switch (choice) {
                     case 1:
                     	system("cls");
-                    	load_file(students, &n, file_name);
+                    //	load_file(students, &n);
                         showAllStudents();
 						back_or_exit();
                         break;
                     case 2:
                     	system("cls");
-                    	load_file(students, &n, file_name);
+                    //	load_file(students, &n);
                         addStudent();
-                        save_file(file_name,students,n);
+                    //   save_file(students,n);
                         back_or_exit();
                         break;
                     case 3:
                     	system("cls");
-                    	load_file(students, &n, file_name);
+                    //	load_file(students, &n);
                         editStudent();
-                        save_file(file_name,students,n);
+                    //  save_file(students,n);
                         back_or_exit();
                         break;
                     case 4:
                     	system("cls");
-                    	load_file(students, &n, file_name);
+                   // 	load_file(students, &n);
                     	searchStudent();
                     	back_or_exit();
                     	break;
                     case 5:
                     	system("cls");
-                    	load_file(students, &n, file_name);
+                    //	load_file(students, &n);
                     	sort_Student_i_or_d(students,n);
-                    	save_file(file_name,students,n);
-			back_or_exit();
                     	break;
-		     case 6:
-			system("cls");
-			load_file(students, &n, file_name);
-			deleted(students, &n);
-			save_file(file_name,students,n);
-			back_or_exit();
-			break;
-		      case 7:
+					case 6:
+						system("cls");
+					//	load_file(students, &n);
+						deleted(students, &n);
+					//	save_file(students,n);
+						break;
+					case 7:
                         printSlowly("\nExisting student menu",50);
                         printSlowly("...",150);
-			printfinish();
+						printfinish();
                         return 0;
                     default:
                         printf("\tInvalid choice. Please try again.\n");/////////
