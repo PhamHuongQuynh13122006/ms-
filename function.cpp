@@ -2,21 +2,21 @@
 #include <stdio.h>
 #include <string.h>
 //Logic ham
-void save_file(const char *file_name,struct Student *students, int n){
-	FILE *file = fopen(file_name, "wb");
+void save_file(struct Student *students, int n){
+	FILE *file = fopen("students.dat", "wb");
     if (file == NULL) {
-        printf("Error: Could not open file %s for writing\n", file_name);
+        printf("Error: Could not open file %s for writing\n", "students.dat");
         return;
     }
     fwrite(&n, sizeof(int), 1, file);
     fwrite(students, sizeof(Student), n, file);
     fclose(file);
-    printf("Data saved to %s successfully.\n", file_name);
+    printf("Data saved to %s successfully.\n", "students.dat");
 }
-int load_file(struct Student *students, int *n,const char *file_name){
-	FILE *file = fopen(file_name, "rb");
+int load_file(struct Student *students, int *n){
+	FILE *file = fopen("students.dat", "rb");
 	if(file == NULL){
-		printf("Error : Could not open file %s for reading \n",file_name);
+		printf("Error : Could not open file %s for reading \n","students.dat");
 		return 0;
 	}
 	if (fread(n, sizeof(int), 1, file) != 1) {
@@ -30,7 +30,7 @@ int load_file(struct Student *students, int *n,const char *file_name){
         return 0;
     }
     fclose(file);
-    printf("Data loaded from %s successfully.\n", file_name);
+    printf("Data loaded from %s successfully.\n","students.dat");
     return 1;
 }
 void menuStart(int *menu) {
