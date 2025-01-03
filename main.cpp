@@ -60,17 +60,19 @@ int main() {
                     	load_file(students, &n, file_name);
                     	sort_Student_i_or_d(students,n);
                     	save_file(file_name,students,n);
+			back_or_exit();
                     	break;
-					case 6:
-						system("cls");
-						load_file(students, &n, file_name);
-						deleted(students, &n);
-						save_file(file_name,students,n);
-						break;
-					case 7:
+		     case 6:
+			system("cls");
+			load_file(students, &n, file_name);
+			deleted(students, &n);
+			save_file(file_name,students,n);
+			back_or_exit();
+			break;
+		      case 7:
                         printSlowly("\nExisting student menu",50);
                         printSlowly("...",150);
-						printfinish();
+			printfinish();
                         return 0;
                     default:
                         printf("\tInvalid choice. Please try again.\n");/////////
