@@ -65,7 +65,7 @@ int load_file(struct Student *students, int *n){
     return 1;
 }
 //In kieu ms(mili/s)
-void printSlowly(const char *mes, int delay){///chonay quennnn
+void printSlowly(const char *mes, int delay){
 	for(int i = 0; mes[i] != '\0'; i++){
 		printf("%c",mes[i]);
 		fflush(stdout);
@@ -99,8 +99,6 @@ void back_or_exit(){
 }
 void addStudent(struct Student *students[], int *n) {
     struct Student new_student;
-
-    // Nh?p ID
     while (1) {
         printf("\tInput ID: ");
         fgets(new_student.student_id, sizeof(new_student.student_id), stdin);
@@ -143,7 +141,7 @@ void addStudent(struct Student *students[], int *n) {
         printf("\tInput birthdate (day month year): ");
         if (scanf("%d %d %d", &new_student.date.day, &new_student.date.month, &new_student.date.year) != 3) {
             printf("Error: Invalid date format. Please try again.\n");
-            while (getchar() != '\n'); // Xóa b? nh? d?m
+            while (getchar() != '\n'); 
         } else if (new_student.date.day < 1 || new_student.date.day > 31 || 
                    new_student.date.month < 1 || new_student.date.month > 12 || 
                    new_student.date.year < 1900 || new_student.date.year > 2100) {
@@ -157,7 +155,7 @@ void addStudent(struct Student *students[], int *n) {
         printf("\tInput gender (1 for Male, 0 for Female): ");
         if (scanf("%d", &new_student.gender) != 1 || (new_student.gender != 0 && new_student.gender != 1)) {
             printf("Error: Gender must be 1 (Male) or 0 (Female).\n");
-            while (getchar() != '\n'); // Xóa b? nh? d?m
+            while (getchar() != '\n'); 
         } else {
             break;
         }
@@ -166,13 +164,13 @@ void addStudent(struct Student *students[], int *n) {
     while (1) {
         printf("\tInput email (without @gmail.com): ");
         fgets(new_student.email, sizeof(new_student.email), stdin);
-        new_student.email[strcspn(new_student.email, "\n")] = '\0'; // Xóa ký t? xu?ng dòng
+        new_student.email[strcspn(new_student.email, "\n")] = '\0'; 
         if (strlen(new_student.email) == 0) {
             printf("Error: Email cannot be empty.\n");
         } else if (strlen(new_student.email) > 14) {
             printf("Error: Email prefix cannot exceed 14 characters.\n");
         } else {
-            strcat(new_student.email, "@gmail.com"); // Thêm duôi @gmail.com
+            strcat(new_student.email, "@gmail.com"); 
             break;
         }
     }
@@ -194,7 +192,7 @@ void addStudent(struct Student *students[], int *n) {
         printf("\tInput number of courses: ");
         if (scanf("%d", &new_student.number_course) != 1 || new_student.number_course < 0) {
             printf("Error: Number of courses must be a positive integer.\n");
-            while (getchar() != '\n'); // Xóa b? nh? d?m
+            while (getchar() != '\n'); 
         } else {
             break;
         }
