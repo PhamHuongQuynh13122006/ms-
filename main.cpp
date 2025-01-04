@@ -29,7 +29,7 @@ int main() {
                     case 1:
                     	system("cls");
                     //	load_file(students, &n);
-                        showAllStudents(students, n);
+                        showAllStudents();
 			back_or_exit();
                         break;
                     case 2:
