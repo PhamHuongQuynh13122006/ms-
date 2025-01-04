@@ -68,7 +68,7 @@ int main() {
 		    case 7:
                         printSlowly("\nExisting student menu",50);
                         printSlowly("...",150);
-						printfinish();
+			printfinish();
                         return 0;
                     default:
                         printf("\tInvalid choice. Please try again.\n");/
