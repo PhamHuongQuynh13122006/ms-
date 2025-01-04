@@ -11,7 +11,8 @@ struct Student students[100] = {
     {"5", "ENG_A", "Nguyen Thi B", {18, 2, 2003}, false, "TTB@gmail.com", "0937595931", 1}
 };
 int n = 5;
-int main() {	
+int main() {
+    int n;	
     int menu;
     menuStart(&menu);
     switch (menu) {
@@ -28,8 +29,8 @@ int main() {
                     case 1:
                     	system("cls");
                     //	load_file(students, &n);
-                        showAllStudents();
-						back_or_exit();
+                        showAllStudents(students, n);
+			back_or_exit();
                         break;
                     case 2:
                     	system("cls");
@@ -54,21 +55,23 @@ int main() {
                     case 5:
                     	system("cls");
                     //	load_file(students, &n);
-                    	sort_Student_i_or_d(students,n);
+                    	sort_Student_i_or_d();
+                    	back_or_exit();
                     	break;
-					case 6:
-						system("cls");
-					//	load_file(students, &n);
-						deleted(students, &n);
-					//	save_file(students,n);
-						break;
-					case 7:
+		    case 6:
+			system("cls");
+		    //	load_file(students, &n);
+			deleted();
+		   //	save_file(students,n);
+			back_or_exit();
+			break;
+		    case 7:
                         printSlowly("\nExisting student menu",50);
                         printSlowly("...",150);
 						printfinish();
                         return 0;
                     default:
-                        printf("\tInvalid choice. Please try again.\n");/////////
+                        printf("\tInvalid choice. Please try again.\n");/
                         break;
                 }
             }
