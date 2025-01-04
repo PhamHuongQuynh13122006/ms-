@@ -51,9 +51,9 @@ AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit2]
-FileName=datatype.h
+FileName=students.dat
 CompileCpp=0
-Folder=include
+Folder=data
 Compile=1
 Link=1
 Priority=1000
@@ -81,9 +81,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=function.cpp
+FileName=datatype.h
 CompileCpp=0
-Folder=src
+Folder=include
 Compile=1
 Link=1
 Priority=1000
@@ -91,11 +91,12 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=students.dat
-Folder=data
+FileName=function.c
+Folder=src
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+CompileCpp=0
 
