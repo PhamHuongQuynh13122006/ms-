@@ -21,7 +21,7 @@ void menuStart(int *menu) {
         }
     } while (*menu < 1 || *menu > 4);
 }
-void displayMenu(){
+void studentMenu(){
 	printf("\n\t     *** Student Menu ***\n");
 	printf("\t=============================\n");
     printf("\t[1]. Show student list\n");
@@ -29,20 +29,9 @@ void displayMenu(){
     printf("\t[3]. Edit student information\n");
     printf("\t[4]. Search a student by name\n");
     printf("\t[5]. Sort a student by name\n");
-    printf("\t[6]. Delecte a student by name\n");
+    printf("\t[6]. Delete a student by name\n");
     printf("\t[7] Exit\n");
     printf("\n\tEnter your choice: ");
-}
-void save_file(struct Student *students, int n){
-	FILE *file = fopen("students.dat", "wb");
-    if (file == NULL) {
-        printf("Error: Could not open file %s for writing\n", "students.dat");
-        return;
-    }
-    fwrite(&n, sizeof(int), 1, file);
-    fwrite(students, sizeof(Student), n, file);
-    fclose(file);
-    printf("Data saved to %s successfully.\n", "students.dat");
 }
 int load_file(struct Student *students, int *n){
 	FILE *file = fopen("students.dat", "rb");
@@ -64,45 +53,33 @@ int load_file(struct Student *students, int *n){
     printf("Data loaded from %s successfully.\n","students.dat");
     return 1;
 }
-//In kieu ms(mili/s)
-void printSlowly(const char *mes, int delay){
-	for(int i = 0; mes[i] != '\0'; i++){
-		printf("%c",mes[i]);
-		fflush(stdout);
-		Sleep(delay);
-	}
-}
-//In ket thuc chuong trinh 
-void printfinish(){
-	printf("\n\t\t========== Thank You ==========");
-	printf("\n\t\t ======= See You Soon ========");
-}
-void back_or_exit(){
-	char choice;
-    while(1){
-	printf("\n\t\tGo back (b) or Exit (0) ? : ");
-	fflush(stdin);
-	scanf("%c",&choice);
-	if(choice == '0'){
-		printSlowly("\n\tExiting program",40);
-		printSlowly("...\n",160);
-		printfinish();
-		exit(0);
-	}else if(choice == 'b'){
-		return;
-		//in la loi do
-	}else{
-		printSlowly("\n\t\t\tInvalid choice",100);
-		printSlowly(" !!!\n",180);
-	}
+void show_student_list(struct Student *students[],int *n) {
+    printf("\n\t\t\t\t\t**** All Students List ****\n");
+    printf("\n");
+    printf("|========================================================================================================|\n");
+    printf("| ID | Classroom |   Name         | Birthdate  | Gender  | Email               | Phone         | Courses |\n");
+    printf("|____|___________|________________|____________|_________|_____________________|_______________|_________|\n");
+    for (int i = 0; i < n; i++) {
+        printf("| %-2s | %-9s | %-14s | %02d/%02d/%04d | %-7s | %-19s | %-13s | %-7d |\n",
+               students[i].student_id,
+               students[i].classroom,
+               students[i].name,
+               students[i].date.day,
+               students[i].date.month,
+               students[i].date.year,
+               students[i].gender ? "Male" : "Female",
+               students[i].email,
+               students[i].phone,
+               students[i].number_course);
     }
+    printf("---------------------------------------------------------------------------------------------------------\n");
 }
 void addStudent(struct Student *students[], int *n) {
     struct Student new_student;
     while (1) {
         printf("\tInput ID: ");
         fgets(new_student.student_id, sizeof(new_student.student_id), stdin);
-        new_student.student_id[strcspn(new_student.student_id, "\n")] = '\0'; 
+        new_student.student_id[strcspn(new_student.student_id, "\n")] = '\0';
         if (strlen(new_student.student_id) == 0) {
             printf("Error: ID cannot be empty.\n");
         } else if (strlen(new_student.student_id) > 9) {
@@ -141,9 +118,9 @@ void addStudent(struct Student *students[], int *n) {
         printf("\tInput birthdate (day month year): ");
         if (scanf("%d %d %d", &new_student.date.day, &new_student.date.month, &new_student.date.year) != 3) {
             printf("Error: Invalid date format. Please try again.\n");
-            while (getchar() != '\n'); 
-        } else if (new_student.date.day < 1 || new_student.date.day > 31 || 
-                   new_student.date.month < 1 || new_student.date.month > 12 || 
+            while (getchar() != '\n');
+        } else if (new_student.date.day < 1 || new_student.date.day > 31 ||
+                   new_student.date.month < 1 || new_student.date.month > 12 ||
                    new_student.date.year < 1900 || new_student.date.year > 2100) {
             printf("Error: Invalid date. Please enter a valid day, month, and year.\n");
         } else {
@@ -155,7 +132,7 @@ void addStudent(struct Student *students[], int *n) {
         printf("\tInput gender (1 for Male, 0 for Female): ");
         if (scanf("%d", &new_student.gender) != 1 || (new_student.gender != 0 && new_student.gender != 1)) {
             printf("Error: Gender must be 1 (Male) or 0 (Female).\n");
-            while (getchar() != '\n'); 
+            while (getchar() != '\n');
         } else {
             break;
         }
@@ -164,13 +141,13 @@ void addStudent(struct Student *students[], int *n) {
     while (1) {
         printf("\tInput email (without @gmail.com): ");
         fgets(new_student.email, sizeof(new_student.email), stdin);
-        new_student.email[strcspn(new_student.email, "\n")] = '\0'; 
+        new_student.email[strcspn(new_student.email, "\n")] = '\0';
         if (strlen(new_student.email) == 0) {
             printf("Error: Email cannot be empty.\n");
         } else if (strlen(new_student.email) > 14) {
             printf("Error: Email prefix cannot exceed 14 characters.\n");
         } else {
-            strcat(new_student.email, "@gmail.com"); 
+            strcat(new_student.email, "@gmail.com");
             break;
         }
     }
@@ -192,7 +169,7 @@ void addStudent(struct Student *students[], int *n) {
         printf("\tInput number of courses: ");
         if (scanf("%d", &new_student.number_course) != 1 || new_student.number_course < 0) {
             printf("Error: Number of courses must be a positive integer.\n");
-            while (getchar() != '\n'); 
+            while (getchar() != '\n');
         } else {
             break;
         }
@@ -249,7 +226,7 @@ void editStudent(struct Student *students[], int *n) {
         }
     }
     while (1) {
-        printf("Birthdate (day/month/year) (current: %02d/%02d/%04d): ", 
+        printf("Birthdate (day/month/year) (current: %02d/%02d/%04d): ",
                student->date.day, student->date.month, student->date.year);
         int day, month, year;
         if (scanf("%d/%d/%d", &day, &month, &year) == 3) {
@@ -261,10 +238,10 @@ void editStudent(struct Student *students[], int *n) {
             }
         }
         printf("Error: Invalid date. Please enter in the format day/month/year and ensure it is valid.\n");
-        getchar(); 
+        getchar();
     }
     while (1) {
-        printf("Gender (1 for Male, 0 for Female) (current: %s): ", 
+        printf("Gender (1 for Male, 0 for Female) (current: %s): ",
                student->gender ? "Male" : "Female");
         int gender_input;
         if (scanf("%d", &gender_input) == 1 && (gender_input == 0 || gender_input == 1)) {
@@ -272,7 +249,7 @@ void editStudent(struct Student *students[], int *n) {
             break;
         }
         printf("Error: Gender must be 1 (Male) or 0 (Female). Please try again.\n");
-        getchar(); 
+        getchar();
     }
     while (1) {
         printf("Email (current: %s): ", student->email);
@@ -359,7 +336,7 @@ void editStudent(struct Student *students[], int *n) {
         }
     }
     while (1) {
-        printf("Birthdate (day/month/year) (current: %02d/%02d/%04d): ", 
+        printf("Birthdate (day/month/year) (current: %02d/%02d/%04d): ",
                student->date.day, student->date.month, student->date.year);
         int day, month, year;
         if (scanf("%d/%d/%d", &day, &month, &year) == 3) {
@@ -374,7 +351,7 @@ void editStudent(struct Student *students[], int *n) {
         getchar();
     }
     while (1) {
-        printf("Gender (1 for Male, 0 for Female) (current: %s): ", 
+        printf("Gender (1 for Male, 0 for Female) (current: %s): ",
                student->gender ? "Male" : "Female");
         int gender_input;
         if (scanf("%d", &gender_input) == 1 && (gender_input == 0 || gender_input == 1)) {
@@ -477,13 +454,13 @@ void deleted(struct Student *students[], int *n) {
         return;
     }
     printf("Input the ID of the student to delete: ");
-    char id[20]; 
-    fflush(stdin); 
-    scanf("%s", id);  
+    char id[20];
+    fflush(stdin);
+    scanf("%s", id);
     int index = -1;
     for (int i = 0; i < *n; i++) {
         if (strcmp(students[i].student_id, id) == 0) {
-            index = i; 
+            index = i;
             break;
         }
     }
@@ -518,7 +495,7 @@ void deleted(struct Student *students[], int *n) {
         for (int i = index; i < *n - 1; i++) {
             students[i] = students[i + 1];
         }
-        (*n)--; 
+        (*n)--;
         printf("Student deleted successfully ^ ^\n");
     } else if (strcmp(confirm, "NO") == 0) {
         printf("Deletion canceled.\n");
@@ -571,4 +548,48 @@ void sort_Student_i_or_d(struct Student *students[],int *n){
                 students[i].number_course);
     }
     printf("\t\t----------------------------------------------------------------------------------------------------------\n");
+}
+void save_file(struct Student *students, int n){
+	FILE *file = fopen("students.dat", "wb");
+    if (file == NULL) {
+        printf("Error: Could not open file %s for writing\n", "students.dat");
+        return;
+    }
+    fwrite(&n, sizeof(int), 1, file);
+    fwrite(students, sizeof(Student), n, file);
+    fclose(file);
+    printf("Data saved to %s successfully.\n", "students.dat");
+}
+//In kieu ms(mili/s)
+void printSlowly(const char *mes, int delay){
+	for(int i = 0; mes[i] != '\0'; i++){
+		printf("%c",mes[i]);
+		fflush(stdout);
+		Sleep(delay);
+	}
+}
+//In ket thuc chuong trinh
+void printfinish(){
+	printf("\n\t\t========== Thank You ==========");
+	printf("\n\t\t ======= See You Soon ========");
+}
+void back_or_exit(){
+	char choice;
+    while(1){
+	printf("\n\t\tGo back (b) or Exit (0) ? : ");
+	fflush(stdin);
+	scanf("%c",&choice);
+	if(choice == '0'){
+		printSlowly("\n\tExiting program",40);
+		printSlowly("...\n",160);
+		printfinish();
+		exit(0);
+	}else if(choice == 'b'){
+		return;
+		//in la loi do
+	}else{
+		printSlowly("\n\t\t\tInvalid choice",100);
+		printSlowly(" !!!\n",180);
+	}
+    }
 }
